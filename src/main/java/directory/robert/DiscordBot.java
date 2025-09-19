@@ -1,5 +1,6 @@
 package directory.robert;
 
+import directory.robert.commands.constants;
 import io.github.cdimascio.dotenv.Dotenv;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -21,6 +22,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 import directory.robert.spotify.*;
+import io.github.cdimascio.dotenv.Dotenv;
 
 import javax.crypto.SecretKey;
 
@@ -30,6 +32,7 @@ public class DiscordBot extends ListenerAdapter {
 
     public static void main(String[] args) {
 
+        /*
         HashMap<String, String> envVariables = new HashMap<>();
 
         try {
@@ -44,7 +47,19 @@ public class DiscordBot extends ListenerAdapter {
             e.printStackTrace();
         }
         String BOT_TOKEN = envVariables.get("BOT_TOKEN");
+
+         */
+        Dotenv dotenv = Dotenv.configure()
+                .filename(".env")
+                .directory(constants.resources_path)
+                .load();
+
+        String BOT_TOKEN = dotenv.get("BOT_TOKEN");
+
         SecretKey key = AES.generateKey();
+
+        // create the databases if they weren't already
+        DB.main();
 
         JDABuilder builder = JDABuilder.createDefault(BOT_TOKEN)
                 .enableIntents(GatewayIntent.GUILD_MESSAGES, GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_MESSAGE_REACTIONS)
@@ -52,6 +67,8 @@ public class DiscordBot extends ListenerAdapter {
                 .addEventListeners(new BotCommands(key))
                 .setActivity(Activity.listening("urmom"));
         jda = builder.build();
+
+
 
         // runs auth server on its own thread
         SpotifyAuthServer server = new SpotifyAuthServer(key);
@@ -82,7 +99,7 @@ public class DiscordBot extends ListenerAdapter {
 
         ).queue();
     }
-
+/*
         private static File createTempEnvFile(String resourcePath) {
         try (InputStream inputStream = DiscordBot.class.getResourceAsStream(resourcePath)) {
             if (inputStream == null) {
@@ -108,5 +125,8 @@ public class DiscordBot extends ListenerAdapter {
             e.printStackTrace();
             return null;
         }
+
+
     }
+    */
 }

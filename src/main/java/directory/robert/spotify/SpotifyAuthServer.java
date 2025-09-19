@@ -52,6 +52,7 @@ public class SpotifyAuthServer extends Thread{
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
+            System.out.println(code);
             SpotifyAuth spotifyAuth = new SpotifyAuth();
             if (code != null) {
                 String response = "Authorization successful! You can close this window.";

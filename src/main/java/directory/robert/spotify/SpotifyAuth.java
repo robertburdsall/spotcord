@@ -134,7 +134,7 @@ public class SpotifyAuth {
          final SpotifyApi spotifyApi = new SpotifyApi.Builder()
                 .setClientId("a1ecfe01e99345eebef3e30989a95471")
                 .setClientSecret("5ea8b82ca5ea478b93586454df7f7fb4")
-                .setRedirectUri(SpotifyHttpManager.makeUri("http://localhost:8888/callback"))
+                .setRedirectUri(SpotifyHttpManager.makeUri("http://10.137.67.175:23349/callback"))
                 .build();
 
          final AuthorizationCodeRequest authorizationCodeRequest = spotifyApi.authorizationCode(authcode)

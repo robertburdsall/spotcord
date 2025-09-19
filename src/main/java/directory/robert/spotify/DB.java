@@ -2,6 +2,7 @@ package directory.robert.spotify;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import directory.robert.commands.constants;
 
 import java.io.IOException;
 import java.sql.*;
@@ -10,7 +11,7 @@ import java.util.Map;
 
 public class DB {
 
-    private static final String DB_URL = "jdbc:sqlite:/home/container/db/database.db";
+    private static final String DB_URL = "jdbc:sqlite:"+ constants.resources_path +"/db/database.db";
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
     public static void insertOrUpdateHashMap(String key, Map<String, String> map) {
@@ -62,7 +63,7 @@ public class DB {
         return map;
     }
 
-    public static void main(String[] args) {
+    public static void main() {
         // Create database and table if they do not exist
         SQLiteUtil.createNewDatabase();
         SQLiteUtil.createNewTable();
@@ -80,7 +81,7 @@ public class DB {
 
 class SQLiteUtil {
 
-    private static final String DB_URL = "jdbc:sqlite:/home/container/db/database.db";
+    private static final String DB_URL = "jdbc:sqlite:"+ constants.resources_path +"/db/database.db";
 
     public static void createNewDatabase() {
         try (Connection conn = DriverManager.getConnection(DB_URL)) {
