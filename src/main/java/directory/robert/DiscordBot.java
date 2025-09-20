@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
@@ -85,7 +86,10 @@ public class DiscordBot extends ListenerAdapter {
                 Commands.slash("link", "Link your discord & Spotify accounts!"),
                 Commands.slash("current", "Get the current song you are listening too!"),
                 Commands.slash("player", "Get the player to control your songs!"),
-                Commands.slash("unlink", "Unlink your discord and spotify accounts!")
+                Commands.slash("unlink", "Unlink your discord and spotify accounts!"),
+                Commands.slash("voice", "adds voice playback! (experimental)")
+                        .addOption(OptionType.CHANNEL, "channel", "What channel you want the playback " +
+                                "broadcasted in!")
                 /*
                 Commands.slash("dubs", "is a w command")
                         .addOptions(

@@ -69,12 +69,12 @@ public class DB {
         SQLiteUtil.createNewTable();
 
 
-        Map<String, String> map1 = new HashMap<>();
-        map1.put("469278229484797962", "AQCryqtJLPfX2HOwNwsr4mjIfqWPqC0KXGa_KxeMqx-Z7HLihL9DI52Etlm2b-Hz8wzVXD5y1xeHMmvJmXxDgG8dylBGdDo_8yTd6bsjv_SA3g6jvGFB5lgIEmiDYNWHu5g");
+        //Map<String, String> map1 = new HashMap<>();
+        //map1.put("469278229484797962", "AQCryqtJLPfX2HOwNwsr4mjIfqWPqC0KXGa_KxeMqx-Z7HLihL9DI52Etlm2b-Hz8wzVXD5y1xeHMmvJmXxDgG8dylBGdDo_8yTd6bsjv_SA3g6jvGFB5lgIEmiDYNWHu5g");
 
 
         // Insert or update HashMaps into SQLite database
-        insertOrUpdateHashMap("REFRESH_TOKENS", map1);
+        //insertOrUpdateHashMap("REFRESH_TOKENS", map1);
 
     }
 }
@@ -85,9 +85,7 @@ class SQLiteUtil {
 
     public static void createNewDatabase() {
         try (Connection conn = DriverManager.getConnection(DB_URL)) {
-            if (conn != null) {
-                System.out.println("A new database has been created.");
-            }
+            if (conn != null) { }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

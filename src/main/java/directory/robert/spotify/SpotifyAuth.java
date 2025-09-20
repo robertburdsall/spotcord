@@ -3,6 +3,7 @@ package directory.robert.spotify;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import directory.robert.commands.constants;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.audio.AudioSendHandler;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import org.apache.hc.core5.http.ParseException;
 import se.michaelthelin.spotify.SpotifyApi;
@@ -39,6 +40,7 @@ public class SpotifyAuth {
     public static ArrayList<String> validating_unlinks = new ArrayList<>();
     // <Discord ID : SpotifyApi object with refresh & access token
     // this hashmap is not dumped or saved as the object cannot be sterilized - local to bot online
+    public static HashMap<String, ArrayList> activeStreams = new HashMap<>();
 
     public SpotifyAuth () {
         REFRESH_TOKENS = DB.getHashMap("REFRESH_TOKENS");
@@ -52,6 +54,15 @@ public class SpotifyAuth {
     public static void removeRefreshToken(String CURRENT_USER_ID){
         REFRESH_TOKENS.remove(CURRENT_USER_ID);
         DB.insertOrUpdateHashMap("REFRESH_TOKENS", REFRESH_TOKENS);
+    }
+
+    public static AudioSendHandler startStream(String CLIENT_ID, String trackUri, String channelID) {
+        String accessToken = SPOTIFY_API_MAP.get(CLIENT_ID).getAccessToken();
+        SpotifyStream stream = new SpotifyStream(accessToken, trackUri);
+        AudioSendHandler handler = stream.getAudioSendHandler();
+        activeStreams.put(channelID, new ArrayList().add(stream, handler));
+
+        return handler;
     }
 
 

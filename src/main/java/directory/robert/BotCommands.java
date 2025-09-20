@@ -56,8 +56,12 @@ public class BotCommands extends ListenerAdapter {
                         case "unlink":
                             unlinkCommand unlink = new unlinkCommand(key);
                             unlink.unlink(event);
+                            break;
+                        case "voice":
+                            voiceCommand voice = new voiceCommand(key);
+                            voice.voice(event);
+                            SpotifyAuth.startStream(event.getUser().getId(), "sigma", event.getOption("channel").getAsChannel().getId());
                     }
-
             } else {
             linkCommand link = new linkCommand(key);
             link.link(event);
@@ -152,7 +156,6 @@ public class BotCommands extends ListenerAdapter {
                     }
                     break;
                 }
-
             case "link":
                 switch (name) {
             // /link authentication verification cases start here
@@ -177,28 +180,27 @@ public class BotCommands extends ListenerAdapter {
                         }
                         break;
                         }
-
             case "unlink":
-                        switch (name) {
-            case "yes":
-                if (SpotifyAuth.validating_unlinks.contains(id)) {
-                    SpotifyAuth.removeRefreshToken(id);
-                    SpotifyAuth.SPOTIFY_API_MAP.remove(id);
-                    event.reply("Successfully unlinked your Spotify & Discord accounts!").setEphemeral(true).queue();
-                    SpotifyAuth.validating_unlinks.remove(id);
-                } else {
-                    event.reply("This unlink session has already ended. Try running the command again!").setEphemeral(true).queue();
-                }
-                break;
+                switch (name) {
+                        case "yes":
+                            if (SpotifyAuth.validating_unlinks.contains(id)) {
+                                SpotifyAuth.removeRefreshToken(id);
+                                SpotifyAuth.SPOTIFY_API_MAP.remove(id);
+                                event.reply("Successfully unlinked your Spotify & Discord accounts!").setEphemeral(true).queue();
+                                SpotifyAuth.validating_unlinks.remove(id);
+                            } else {
+                                event.reply("This unlink session has already ended. Try running the command again!").setEphemeral(true).queue();
+                            }
+                            break;
 
-            case "no":
-                if (SpotifyAuth.validating_unlinks.contains(id)) {
-                    event.reply("The unlinking of your Spotify & Discord accounts has been cancelled. You can still use Spotcord as usual!").setEphemeral(true).queue();
-                    SpotifyAuth.validating_unlinks.remove(id);
-                } else {
-                    event.reply("This unlink session has already ended. Try running the command again!").setEphemeral(true).queue();
-                }
-                break;
+                        case "no":
+                            if (SpotifyAuth.validating_unlinks.contains(id)) {
+                                event.reply("The unlinking of your Spotify & Discord accounts has been cancelled. You can still use Spotcord as usual!").setEphemeral(true).queue();
+                                SpotifyAuth.validating_unlinks.remove(id);
+                            } else {
+                                event.reply("This unlink session has already ended. Try running the command again!").setEphemeral(true).queue();
+                            }
+                            break;
                         }
         }
     }
