@@ -60,7 +60,6 @@ public class BotCommands extends ListenerAdapter {
                         case "voice":
                             voiceCommand voice = new voiceCommand(key);
                             voice.voice(event);
-                            SpotifyAuth.startStream(event.getUser().getId(), "sigma", event.getOption("channel").getAsChannel().getId());
                     }
             } else {
             linkCommand link = new linkCommand(key);

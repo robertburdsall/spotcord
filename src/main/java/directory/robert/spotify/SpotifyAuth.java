@@ -14,6 +14,7 @@ import java.nio.charset.StandardCharsets;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import se.michaelthelin.spotify.SpotifyHttpManager;
@@ -40,7 +41,8 @@ public class SpotifyAuth {
     public static ArrayList<String> validating_unlinks = new ArrayList<>();
     // <Discord ID : SpotifyApi object with refresh & access token
     // this hashmap is not dumped or saved as the object cannot be sterilized - local to bot online
-    public static HashMap<String, ArrayList> activeStreams = new HashMap<>();
+    public static HashMap<String, SpotifyStream> activeStreams = new HashMap<>();
+    // <channelID, list(SpotifyStream)>
 
     public SpotifyAuth () {
         REFRESH_TOKENS = DB.getHashMap("REFRESH_TOKENS");
@@ -60,8 +62,8 @@ public class SpotifyAuth {
         String accessToken = SPOTIFY_API_MAP.get(CLIENT_ID).getAccessToken();
         SpotifyStream stream = new SpotifyStream(accessToken, trackUri);
         AudioSendHandler handler = stream.getAudioSendHandler();
-        activeStreams.put(channelID, new ArrayList().add(stream, handler));
 
+        activeStreams.put(channelID, stream);
         return handler;
     }
 
@@ -145,7 +147,7 @@ public class SpotifyAuth {
          final SpotifyApi spotifyApi = new SpotifyApi.Builder()
                 .setClientId("a1ecfe01e99345eebef3e30989a95471")
                 .setClientSecret("5ea8b82ca5ea478b93586454df7f7fb4")
-                .setRedirectUri(SpotifyHttpManager.makeUri("http://10.137.67.175:23349/callback"))
+                .setRedirectUri(SpotifyHttpManager.makeUri(constants.serverAddress))
                 .build();
 
          final AuthorizationCodeRequest authorizationCodeRequest = spotifyApi.authorizationCode(authcode)

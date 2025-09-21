@@ -3,6 +3,7 @@ package directory.robert.commands;
 import directory.robert.spotify.AES;
 import directory.robert.spotify.SpotifyAuth;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.audio.AudioSendHandler;
 import net.dv8tion.jda.api.entities.Widget;
 import net.dv8tion.jda.api.entities.channel.Channel;
 import net.dv8tion.jda.api.entities.channel.ChannelType;
@@ -36,10 +37,15 @@ public class voiceCommand {
         GuildChannel selectedChannel = channelOption.getAsChannel();
 
         if (selectedChannel.getType() == ChannelType.VOICE) {
-            AudioChannel voiceChannel = (AudioChannel) selectedChannel;
+            VoiceChannel voiceChannel = (VoiceChannel) selectedChannel;
             AudioManager audioManager = event.getGuild().getAudioManager();
             audioManager.openAudioConnection(voiceChannel);
-            audioManager.setSendingHandler();
+            AudioSendHandler handler = SpotifyAuth.startStream(event.getUser().getId(), "sigma", event.getOption("channel").getAsChannel().getId());
+            if (handler == null) {
+                event.reply("failed to start spotify stream").setEphemeral(true).queue();
+                return;
+            }
+            audioManager.setSendingHandler(handler);
 
             event.reply("Joined voice channel: " + voiceChannel.getName()).queue();
         } else {
