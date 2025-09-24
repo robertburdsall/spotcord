@@ -31,9 +31,7 @@ import javax.crypto.SecretKey;
 public class SpotifyAuth {
 
     private static final String CLIENT_ID = "a1ecfe01e99345eebef3e30989a95471";
-    private static final String CLIENT_SECRET = "5ea8b82ca5ea478b93586454df7f7fb4";
     private static final String AUTH_URL = "https://accounts.spotify.com/authorize";
-    private static final String TOKEN_URL = "https://accounts.spotify.com/api/token";
     public static Map<String, String> REFRESH_TOKENS = new HashMap<>();
     // <Discord ID : Authentication code>
     public static HashMap<String, SpotifyApi> SPOTIFY_API_MAP = new HashMap<>();

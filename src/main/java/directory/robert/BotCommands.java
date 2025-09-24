@@ -60,6 +60,9 @@ public class BotCommands extends ListenerAdapter {
                         case "voice":
                             voiceCommand voice = new voiceCommand(key);
                             voice.voice(event);
+                        case "play":
+                            playCommand play = new playCommand(spotifyApi, key);
+                            play.play(event);
                     }
             } else {
             linkCommand link = new linkCommand(key);

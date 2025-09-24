@@ -66,7 +66,7 @@ public class DiscordBot extends ListenerAdapter {
                 .enableIntents(GatewayIntent.GUILD_MESSAGES, GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_MESSAGE_REACTIONS)
                 .setMemberCachePolicy(MemberCachePolicy.ALL)
                 .addEventListeners(new BotCommands(key))
-                .setActivity(Activity.listening("urmom"));
+                .setActivity(Activity.listening("noahsucks"));
         jda = builder.build();
 
 
@@ -89,7 +89,9 @@ public class DiscordBot extends ListenerAdapter {
                 Commands.slash("unlink", "Unlink your discord and spotify accounts!"),
                 Commands.slash("voice", "adds voice playback! (experimental)")
                         .addOption(OptionType.CHANNEL, "channel", "What channel you want the playback " +
-                                "broadcasted in!")
+                                "broadcasted in!"),
+                Commands.slash("play", "play a song through your spotify account!").addOption(OptionType.STRING, "title",
+                        "What " + "song do you want to play?")
                 /*
                 Commands.slash("dubs", "is a w command")
                         .addOptions(

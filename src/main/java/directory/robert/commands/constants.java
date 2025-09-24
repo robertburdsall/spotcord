@@ -6,7 +6,7 @@ public class constants {
 
     public static final Color primaryColor = new Color(0x7289da);
     public static final Color errorColor = new Color(0xFAA0A0);
-    public static final String serverAddress = "http://10.137.68.63:23349/callback";
+    public static final String serverAddress = "http://10.137.93.246:23349/callback";
     public static final String localAddress = "http://localhost:8888/callback";
     public static final int localPort = 8888;
     public static final int serverPort = 23349;
